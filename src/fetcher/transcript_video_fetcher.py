@@ -36,7 +36,7 @@ def write_to_json_file1(video_id, transcript, output_path):
     # .format_transcript(transcript) turns the transcript into a JSON string.
     json_formatted = formatter.format_transcript(transcript)
     json_transcript = json.loads(json_formatted)
-    arr_json = [{str(t['start']): {'Content': t['text']}} for t in json_transcript]
+    arr_json = {str(t['start']): {'Content': t['text']} for t in json_transcript}
 
     # Now we can write it out to a file.
     merged_json_filename = output_path + '/transcript_video_' + video_id + '.json'
