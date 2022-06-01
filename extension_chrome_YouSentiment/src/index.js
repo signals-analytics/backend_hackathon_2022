@@ -39,7 +39,6 @@ const config = {
     data: data
 };
 
-
 // declare a method to search
 const searchForSentiment = async (config) => {
     loading.style.display = "block";
