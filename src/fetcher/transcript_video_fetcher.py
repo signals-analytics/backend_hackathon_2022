@@ -1,8 +1,12 @@
+import json
+import logging
+
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import Formatter
 from youtube_transcript_api.formatters import JSONFormatter
 from youtube_transcript_api.formatters import TextFormatter
 from youtube_transcript_api.formatters import WebVTTFormatter
+logger = logging.getLogger()
 
 def fetch_transcript_by_id(video_id):
     # retrieve the available transcripts
@@ -31,11 +35,17 @@ def write_to_json_file1(video_id, transcript, output_path):
 
     # .format_transcript(transcript) turns the transcript into a JSON string.
     json_formatted = formatter.format_transcript(transcript)
+    json_transcript = json.loads(json_formatted)
+    arr_json = [{str(t['start']): {'Content': t['text']}} for t in json_transcript]
 
     # Now we can write it out to a file.
-    with open(output_path + '/transcript_video_' + video_id + '.json', 'w', encoding='utf-8') as json_file:
-        json_file.write(json_formatted)
+    merged_json_filename = output_path + '/transcript_video_' + video_id + '.json'
+
+    with open(merged_json_filename, 'w', encoding='utf-8') as json_file:
+        json_file.write(json.dumps(arr_json))
     # Now should have a new JSON file that you can easily read back into Python.
+    logging.info("json file: " + merged_json_filename)
+    return merged_json_filename
 
 def print_transcript(srt):
     text_list = []
