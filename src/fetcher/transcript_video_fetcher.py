@@ -1,5 +1,7 @@
 import json
 import logging
+import os
+import time
 
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api.formatters import Formatter
@@ -13,8 +15,11 @@ def fetch_transcript_by_id(video_id):
     return YouTubeTranscriptApi.list_transcripts(video_id)
 
 def write_transcripts_to_json(transcript_list, output_path):
-    for transcript in transcript_list:
-        write_to_json_file1(transcript.video_id, transcript.fetch(), output_path)
+    # return list of json filenames (full path)
+    json_output_path = os.path.join(output_path, "json_input_for_sentiment",  str(time.time()))
+    os.makedirs(json_output_path)
+    logger.info("Going to write json for sentiment analysis input in path:  " + json_output_path)
+    return [write_to_json_file1(transcript.video_id, transcript.fetch(), output_path) for transcript in transcript_list]
 
 def write_to_json_file(video_id):
     # Must be a single transcript.
