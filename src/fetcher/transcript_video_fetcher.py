@@ -77,6 +77,13 @@ def print_transcript(srt):
     text = ' '.join(text_list)
     print(text)
 
+def appeand_transcript(srt):
+    text_list = []
+    for i in srt:
+        text_list.append(i['text'])
+
+    text = ' '.join(text_list)
+    return text
 
 def print_all_transcripts(video_ids):
     transcript_list, unretrievable_videos = YouTubeTranscriptApi.get_transcripts(video_ids, continue_after_error=True)

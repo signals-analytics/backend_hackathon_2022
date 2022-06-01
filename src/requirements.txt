@@ -1,1 +1,2 @@
 sentence-splitter
+youtube_transcript_api
