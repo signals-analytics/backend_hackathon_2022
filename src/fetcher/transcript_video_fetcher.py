@@ -12,11 +12,6 @@ def write_transcripts_to_json(transcript_list, output_path):
     for transcript in transcript_list:
         write_to_json_file1(transcript.video_id, transcript.fetch(), output_path)
 
-def merge_transcripts(transcripts):
-    merged_transcript = TextFormatter().format_transcripts([t.fetch() for t in transcripts])
-    return merged_transcript
-
-
 def write_to_json_file(video_id):
     # Must be a single transcript.
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
