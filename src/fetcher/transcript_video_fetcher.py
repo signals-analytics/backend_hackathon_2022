@@ -4,9 +4,6 @@ from youtube_transcript_api.formatters import JSONFormatter
 from youtube_transcript_api.formatters import TextFormatter
 from youtube_transcript_api.formatters import WebVTTFormatter
 
-def get_srt(video_id):
-    return YouTubeTranscriptApi.list_transcripts(video_id)
-
 def fetch_transcript_by_id(video_id):
     # retrieve the available transcripts
     transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
@@ -27,22 +24,7 @@ def fetch_transcript_by_id(video_id):
 
         # fetch the actual transcript data
         print(transcript.fetch())
-        #filter_transcript(transcript_list, transcript)
-
-
-def filter_transcript(transcript_list, transcript):
-    # translating the transcript will return another transcript object
-    print(transcript.translate('en').fetch())
-
-    # you can also directly filter for the language you are looking for, using the transcript list
-    transcript = transcript_list.find_transcript(['de', 'en'])
-
-    # or just filter for manually created transcripts
-    transcript = transcript_list.find_manually_created_transcript(['de', 'en'])
-
-    # or automatically generated ones
-    transcript = transcript_list.find_generated_transcript(['de', 'en'])
-
+        write_to_json_file1(transcript.video_id, transcript)
 
 def write_to_json_file(video_id):
     # Must be a single transcript.
@@ -77,7 +59,7 @@ def print_transcript(srt):
     text = ' '.join(text_list)
     print(text)
 
-def appeand_transcript(srt):
+def appeand_all_transcript_text(srt):
     text_list = []
     for i in srt:
         text_list.append(i['text'])
@@ -96,10 +78,9 @@ def print_all_transcripts(video_ids):
             print_transcript(srt)
 
 
-def print_transcript_by_id(video_id):
+def write_transcript_to_json(video_id):
     print("\nvideo_id = ", video_id)
     srt = YouTubeTranscriptApi.get_transcript(video_id)
-    print_transcript(srt)
     write_to_json_file1(video_id, srt)
 
 
@@ -108,6 +89,3 @@ videoListName = "youtubeVideoIDlist.txt"
 with open(videoListName) as f:
     video_ids = f.read().splitlines()
     print_all_transcripts(video_ids)
-
-    #fetch_transcript_by_id(video_ids[0])
-    #print_transcript_by_id(video_ids[0])
