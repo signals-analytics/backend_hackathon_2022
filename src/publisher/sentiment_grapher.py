@@ -44,7 +44,8 @@ def generate_sentiment_output_graph(sentiment_output_files, output_path):
     logger.info("PATH=" + os.getcwd())
 
     # TBD!!
-    sentiment_output_files = ['../publisher/sentiment_output_example.json']
+    # sentiment_output_files = ['../publisher/sentiment_output_example.json']
+    sentiment_output_files = ['../publisher/transcript_video_wTXmkn6B7dI&lc.json.out']
 
     for sentiment_output_file in sentiment_output_files:
         csv_output_path = os.path.join(output_path, "csv_output")
@@ -53,6 +54,7 @@ def generate_sentiment_output_graph(sentiment_output_files, output_path):
         with open(csv_output_file_path, "w") as csv_file:
             csv_writer = csv.writer(csv_file)
             csv_writer.writerow(['id', 'sentiment'])
+            logger.info("Going to write csv output: " + csv_output_file_path)
             with open(sentiment_output_file) as json_file:
                 output_json = json.load(json_file)
             for json_data_point in output_json:
